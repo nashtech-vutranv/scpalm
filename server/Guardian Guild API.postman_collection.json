@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "404c23d6-3ddf-4e65-a313-1fade62eb493",
+		"name": "Guardian Guild API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26071346"
+	},
+	"item": [
+		{
+			"name": "ZAP",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "All ZAP Vulnerabilities",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetAllZapScans",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetAllZapScans"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP By ScanId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetScansById/:scanId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetScansById",
+										":scanId"
+									],
+									"variable": [
+										{
+											"key": "scanId",
+											"value": "660d31c9-319e-4da1-bbe6-b5dcdb6c25fe"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP By VulnId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetZapScanByVulnId/:vulnId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetZapScanByVulnId",
+										":vulnId"
+									],
+									"variable": [
+										{
+											"key": "vulnId",
+											"value": "015ebd27-1213-4ae2-a49c-5d436cbdd142"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP Get Web Scans",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetAllWebScans",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetAllWebScans"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "ZAP By ScanUrl",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"connection": true
+								},
+								"followRedirects": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"scanUrl\": \"http://public-firing-range.appspot.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetZapScanByScanUrl",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetZapScanByScanUrl"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP Upload Report",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"contentType": "",
+											"type": "file",
+											"src": "/C:/Users/sunde/Desktop/Security/DevSecops/GuardianGuild-API/README.md"
+										},
+										{
+											"key": "scanId",
+											"value": "0e0a6fd3-231f-45c2-9188-c0b55dea",
+											"type": "text"
+										},
+										{
+											"key": "reportType",
+											"value": "ZAP",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:1337/api/zap/uploadReport",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"uploadReport"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP Get Total Vuln",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"url\": \"http://public-firing-range.appspot.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetTotalVuln",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetTotalVuln"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP Sync Vuln Count",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"scanId\": \"660d31c9-319e-4da1-bbe6-b5dcdb6c25fe\",\r\n    \"url\": \"http://lab.awh.zdresearch.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1337/api/zap/SyncTotalVuln",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"SyncTotalVuln"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP Get Web Scans by Project Id",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": \"11aa8753-2516-4855-b224-ec2fb17f6bf2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetWebScansByProjectId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetWebScansByProjectId"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ZAP Get Web Scans by ScanId",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"scanId\": \"0e0a6fd3-231f-45c2-9188-c0b55dea00c7\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1337/api/zap/GetWebScansByScanId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"GetWebScansByScanId"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Report",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"vulnId\": \"54ee464b-84e6-44be-a772-bb7cde243879\",\r\n    \"scanUrl\": \"https://edit.me\",\r\n    \"title\": \"I AM EDITED\",\r\n    \"description\": \"HACKED HACKED HACKED PWNED PWNED\",\r\n    \"solution\": \"DON'T GET PWNED 4HEAD\",\r\n    \"score\": \"3\",\r\n    \"reference\": \"NONE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1337/api/zap/updateVuln",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1337",
+									"path": [
+										"api",
+										"zap",
+										"updateVuln"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

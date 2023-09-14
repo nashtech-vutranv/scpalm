@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Organisation 
+model Organization {
+  orgId       String           @id @unique @default(uuid())
+  name        String
+  description String?          @default("N/A")
+  logo        String?
+  contact     String
+  address     String
+  User        User[]
+  WebScanDb   WebScanResults[]
+  Project     Project[]
+}
+
+// User Roles
+enum Role {
+  USER
+  ADMIN
+}
+
+// User Profiles
+model User {
+  id        String       @id @unique @default(uuid())
+  email     String       @unique
+  firstName String
+  lastName  String
+  role      Role         @default(USER)
+  org       Organization @relation(fields: [orgId], references: [orgId], onDelete: Cascade)
+  orgId     String
+  Project   Project[]
+}
+
+// Project
+model Project {
+  id        String           @id @unique @default(uuid())
+  pName     String
+  pOwner    String
+  pStatus   String
+  org       Organization     @relation(fields: [orgId], references: [orgId])
+  orgId     String
+  user      User             @relation(fields: [userId], references: [id])
+  userId    String
+  WebScanDb WebScanResults[]
+}
+
+// Web Scan
+model WebScanResults {
+  scanId            String          @id @unique @default(uuid())
+  scanUrl           String
+  scanDate          DateTime        @default(now())
+  inProject         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId         String
+  vulnTotal         Int
+  vulnCritical      Int
+  vulnHigh          Int
+  vulnMedium        Int
+  vulnLow           Int
+  vulnInfo          Int
+  createdTime       DateTime        @default(now())
+  isActive          Boolean         @default(true)
+  ZAPScanResults    ZAPScanResult[]
+  Organization      Organization?   @relation(fields: [organizationOrgId], references: [orgId])
+  organizationOrgId String?         @db.VarChar(255)
+}
+
+// Scanners
+model ZAPScanResult {
+  vulnId      String         @id @default(uuid())
+  scan_id     WebScanResults @relation(fields: [scanId], references: [scanId])
+  scanId      String
+  scanUrl     String
+  title       String
+  vulnScore   Int            @default(1) @db.Integer
+  solution    String?        @default("N/A")
+  description String?        @default("N/A")
+  isntance    String?        @default("N/A")
+  reference   String?        @default("N/A")
+}

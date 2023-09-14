@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<OWASPZAPReport programName="OWASP ZAP" version="2.13.0" generated="Thu, 27 Jul 2023 04:47:54">
+	
+		<site name="https://ginandjuice.shop" host="ginandjuice.shop" port="443" ssl="true">
+			<alerts>
+				
+			</alerts>
+		</site>
+	
+</OWASPZAPReport>

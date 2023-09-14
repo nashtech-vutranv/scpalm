@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  orgId       String           @id @unique @default(uuid())
+  name        String
+  description String?          @default("N/A")
+  logo        String?
+  contact     String
+  address     String
+  Project     Project[]
+  User        User[]
+  WebScanDb   WebScanResults[]
+}
+
+model User {
+  id        String       @id @unique @default(uuid())
+  email     String       @unique
+  firstName String
+  lastName  String
+  role      Role         @default(USER)
+  orgId     String
+  Project   Project[]
+  org       Organization @relation(fields: [orgId], references: [orgId], onDelete: Cascade)
+}
+
+model Project {
+  id        String           @id @unique @default(uuid())
+  pName     String
+  pOwner    String
+  pStatus   String
+  orgId     String
+  userId    String
+  org       Organization     @relation(fields: [orgId], references: [orgId])
+  user      User             @relation(fields: [userId], references: [id])
+  WebScanDb WebScanResults[]
+}
+
+model WebScanResults {
+  scanId            String          @id @unique @default(uuid())
+  scanUrl           String
+  scanDate          DateTime        @default(now())
+  projectId         String
+  vulnTotal         Int
+  vulnCritical      Int
+  vulnHigh          Int
+  vulnMedium        Int
+  vulnLow           Int
+  vulnInfo          Int
+  createdTime       DateTime        @default(now())
+  isActive          Boolean         @default(true)
+  organizationOrgId String?         @db.VarChar(255)
+  Organization      Organization?   @relation(fields: [organizationOrgId], references: [orgId])
+  inProject         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  ZAPScanResults    ZAPScanResult[]
+}
+
+model ZAPScanResult {
+  scanId      String
+  description String?        @default("N/A")
+  isntance    String?        @default("N/A")
+  reference   String?        @default("N/A")
+  scanUrl     String
+  solution    String?        @default("N/A")
+  title       String
+  vulnId      String         @id @default(uuid())
+  vulnScore   Int            @default(1)
+  scan_id     WebScanResults @relation(fields: [scanId], references: [scanId])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
